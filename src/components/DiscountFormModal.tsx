@@ -1,7 +1,6 @@
 import { X as CloseIcon, CheckCircle2, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 interface DiscountFormModalProps {
   isOpen: boolean;
@@ -11,7 +10,6 @@ interface DiscountFormModalProps {
 }
 
 export default function DiscountFormModal({ isOpen, onClose, isSubmitted, onSubmit }: DiscountFormModalProps) {
-  const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,7 +31,7 @@ export default function DiscountFormModal({ isOpen, onClose, isSubmitted, onSubm
     } catch (error) {
       console.error('Error submitting form:', error);
       setIsSubmitting(false);
-      alert(t('discount.errorMessage'));
+      alert('There was an error submitting the form. Please try again.');
     }
   };
 
@@ -51,10 +49,10 @@ export default function DiscountFormModal({ isOpen, onClose, isSubmitted, onSubm
             <div className="flex items-center justify-between p-6 border-b border-white/10 bg-[#1a1d21]">
               <div>
                 <h3 className="text-xl font-bold text-white uppercase tracking-tight">
-                  {isSubmitted ? t('discount.titleSubmitted') : t('discount.title')}
+                  {isSubmitted ? 'Discount Secured' : 'Claim 100% Discount'}
                 </h3>
                 <p className="text-gray-400 text-sm mt-1">
-                  {isSubmitted ? t('discount.subtitleSubmitted') : t('discount.subtitle')}
+                  {isSubmitted ? 'Your spot is reserved.' : 'Fill out the form below to secure your spot.'}
                 </p>
               </div>
               <button 
@@ -76,46 +74,46 @@ export default function DiscountFormModal({ isOpen, onClose, isSubmitted, onSubm
                   <div className="w-16 h-16 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-6">
                     <CheckCircle2 size={32} />
                   </div>
-                  <h4 className="text-2xl font-bold text-white mb-2">{t('discount.successTitle')}</h4>
+                  <h4 className="text-2xl font-bold text-white mb-2">Discount Claimed!</h4>
                   <p className="text-gray-400 mb-8">
-                    {t('discount.successMessage')}
+                    Thank you. Our team will contact you shortly to apply your 100% discount to your chosen course.
                   </p>
                   <button 
                     onClick={onClose}
                     className="w-full bg-white/10 text-white font-bold py-4 rounded-xl text-sm tracking-widest uppercase hover:bg-white/20 transition-colors"
                   >
-                    {t('discount.closeButton')}
+                    Close Window
                   </button>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label htmlFor="firstName" className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t('discount.firstName')}</label>
+                      <label htmlFor="firstName" className="text-xs font-bold text-gray-400 uppercase tracking-widest">First Name</label>
                       <input 
                         type="text" 
                         id="firstName" 
                         name="firstName"
                         required
                         className="w-full bg-[#1a1d21] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#FFB800] transition-colors"
-                        placeholder={t('discount.firstNamePlaceholder')}
+                        placeholder="Your first name"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="lastName" className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t('discount.lastName')}</label>
+                      <label htmlFor="lastName" className="text-xs font-bold text-gray-400 uppercase tracking-widest">Last Name</label>
                       <input 
                         type="text" 
                         id="lastName" 
                         name="lastName"
                         required
                         className="w-full bg-[#1a1d21] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#FFB800] transition-colors"
-                        placeholder={t('discount.lastNamePlaceholder')}
+                        placeholder="Your last name"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="phone" className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t('discount.phone')}</label>
+                    <label htmlFor="phone" className="text-xs font-bold text-gray-400 uppercase tracking-widest">Phone Number</label>
                     <input 
                       type="tel" 
                       id="phone" 
@@ -127,7 +125,7 @@ export default function DiscountFormModal({ isOpen, onClose, isSubmitted, onSubm
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t('discount.email')}</label>
+                    <label htmlFor="email" className="text-xs font-bold text-gray-400 uppercase tracking-widest">Email</label>
                     <input 
                       type="email" 
                       id="email" 
@@ -140,25 +138,25 @@ export default function DiscountFormModal({ isOpen, onClose, isSubmitted, onSubm
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label htmlFor="city" className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t('discount.city')}</label>
+                      <label htmlFor="city" className="text-xs font-bold text-gray-400 uppercase tracking-widest">City</label>
                       <input 
                         type="text" 
                         id="city" 
                         name="city"
                         required
                         className="w-full bg-[#1a1d21] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#FFB800] transition-colors"
-                        placeholder={t('discount.cityPlaceholder')}
+                        placeholder="Your city"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor="district" className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t('discount.district')}</label>
+                      <label htmlFor="district" className="text-xs font-bold text-gray-400 uppercase tracking-widest">District</label>
                       <input 
                         type="text" 
                         id="district" 
                         name="district"
                         required
                         className="w-full bg-[#1a1d21] border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#FFB800] transition-colors"
-                        placeholder={t('discount.districtPlaceholder')}
+                        placeholder="Your district"
                       />
                     </div>
                   </div>
@@ -171,10 +169,10 @@ export default function DiscountFormModal({ isOpen, onClose, isSubmitted, onSubm
                     {isSubmitting ? (
                       <>
                         <Loader2 size={18} className="animate-spin" />
-                        {t('discount.processing')}
+                        Processing...
                       </>
                     ) : (
-                      t('discount.submit')
+                      'Submit Request'
                     )}
                   </button>
                 </form>

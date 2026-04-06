@@ -1,17 +1,11 @@
 import { Info, Globe } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 
 export default function Navbar() {
-  const { t, i18n } = useTranslation();
-  const [lang, setLang] = useState(i18n.language.toUpperCase());
+  const [lang, setLang] = useState('EN');
   const location = useLocation();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setLang(i18n.language.toUpperCase());
-  }, [i18n.language]);
 
   const scrollTo = (id: string) => {
     if (location.pathname !== '/') {
@@ -28,8 +22,7 @@ export default function Navbar() {
   };
 
   const toggleLang = () => {
-    const newLang = lang === 'EN' ? 'PT' : 'EN';
-    i18n.changeLanguage(newLang.toLowerCase());
+    setLang(prev => prev === 'EN' ? 'PT' : 'EN');
   };
 
   return (
@@ -45,33 +38,33 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden lg:flex items-center gap-6 text-xs font-semibold tracking-wider text-gray-300">
-          <button onClick={() => scrollTo('about')} className="hover:text-white transition-colors">{t('nav.about')}</button>
-          <button onClick={() => scrollTo('how-it-works')} className="hover:text-white transition-colors">{t('nav.howItWorks')}</button>
-          <button onClick={() => scrollTo('pricing')} className="hover:text-white transition-colors">{t('nav.pricing')}</button>
-          <button onClick={() => scrollTo('courses')} className="hover:text-white transition-colors">{t('nav.courses')}</button>
-          <button onClick={() => scrollTo('professionals')} className="hover:text-white transition-colors">{t('nav.professionals')}</button>
-          <button onClick={() => scrollTo('partners')} className="hover:text-white transition-colors">{t('nav.partners')}</button>
-          <button onClick={() => scrollTo('contact-form')} className="hover:text-white transition-colors">{t('nav.contact')}</button>
+          <button onClick={() => scrollTo('about')} className="hover:text-white transition-colors">ABOUT</button>
+          <button onClick={() => scrollTo('how-it-works')} className="hover:text-white transition-colors">HOW IT WORKS</button>
+          <button onClick={() => scrollTo('pricing')} className="hover:text-white transition-colors">PRICING</button>
+          <button onClick={() => scrollTo('courses')} className="hover:text-white transition-colors">COURSES</button>
+          <button onClick={() => scrollTo('professionals')} className="hover:text-white transition-colors">PROFESSIONALS</button>
+          <button onClick={() => scrollTo('partners')} className="hover:text-white transition-colors">PARTNERS</button>
+          <button onClick={() => scrollTo('contact-form')} className="hover:text-white transition-colors">CONTACT</button>
         </div>
 
         <div className="flex items-center gap-4 md:gap-6">
-          <button onClick={toggleLang} className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-xs font-semibold cursor-pointer">
+          <div className="flex items-center gap-2 text-gray-300 transition-colors text-xs font-semibold">
             <Globe size={16} />
-            <span className="hidden sm:inline">{lang}</span>
-          </button>
+            <span className="hidden sm:inline">EN</span>
+          </div>
           
           <button 
             onClick={() => window.dispatchEvent(new CustomEvent('openNotifyMe'))}
             className="text-white px-2 py-2 rounded-md text-xs font-bold tracking-wider hover:text-[#FFB800] transition-colors"
           >
-            {t('nav.notifyMe')}
+            NOTIFY ME
           </button>
           
           <button 
             onClick={() => scrollTo('contact-form')}
             className="bg-[#FFB800] text-black px-4 md:px-6 py-2 rounded-md text-xs font-bold tracking-wider hover:bg-[#FFB800]/90 transition-colors"
           >
-            {t('nav.getStarted')}
+            GET STARTED
           </button>
         </div>
       </div>

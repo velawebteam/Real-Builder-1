@@ -1,22 +1,20 @@
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+
+const courses = [
+  { name: 'Tiles & Tiling' },
+  { name: 'Plastering / Microcement' },
+  { name: 'Professional Cleaning' },
+  { name: 'Construction Assistant' },
+  { name: 'Masonry / Plastering' },
+  { name: 'Drywall (Pladur)' },
+  { name: 'Framing' },
+  { name: 'Steel Work' },
+  { name: 'Stock Management / Logistics' },
+];
 
 export default function Courses() {
-  const { t } = useTranslation();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const courses = [
-    { name: t('courses.list.course1') },
-    { name: t('courses.list.course2') },
-    { name: t('courses.list.course3') },
-    { name: t('courses.list.course4') },
-    { name: t('courses.list.course5') },
-    { name: t('courses.list.course6') },
-    { name: t('courses.list.course7') },
-    { name: t('courses.list.course8') },
-    { name: t('courses.list.course9') },
-  ];
 
   // Triplicate courses for seamless infinite scrolling
   const infiniteCourses = [...courses, ...courses, ...courses];
@@ -59,7 +57,7 @@ export default function Courses() {
 
     container.addEventListener('scroll', handleScroll);
     return () => container.removeEventListener('scroll', handleScroll);
-  }, [courses.length]);
+  }, []);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -88,10 +86,10 @@ export default function Courses() {
       <div className="max-w-6xl mx-auto px-6 relative">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight uppercase">
-            {t('courses.title')}
+            COURSES
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            {t('courses.subtitle')}
+            Master specialized skills in high-demand construction trades. All courses include theory, practice, and certification.
           </p>
         </div>
 
@@ -126,11 +124,11 @@ export default function Courses() {
                   {String((index % courses.length) + 1).padStart(2, '0')}
                 </div>
                 <div className="relative z-10">
-                  <div className="text-[#FFB800] text-[10px] font-bold tracking-widest uppercase mb-3">{t('courses.certification')}</div>
+                  <div className="text-[#FFB800] text-[10px] font-bold tracking-widest uppercase mb-3">Certification</div>
                   <h3 className="text-white font-bold text-xl leading-tight w-4/5 group-hover:text-[#FFB800] transition-colors">{course.name}</h3>
                 </div>
                 <div className="relative z-10 flex items-center gap-2 text-gray-500 text-sm font-semibold group-hover:text-white transition-colors mt-4 uppercase">
-                  {t('courses.interested')} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  Interested <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             ))}

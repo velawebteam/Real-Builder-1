@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'motion/react';
-import { useTranslation } from 'react-i18next';
 
 const Counter = ({ from, to, duration = 2, suffix = '' }: { from: number, to: number, duration?: number, suffix?: string }) => {
   const [count, setCount] = useState(from);
@@ -35,7 +34,6 @@ const Counter = ({ from, to, duration = 2, suffix = '' }: { from: number, to: nu
 };
 
 export default function AboutUs() {
-  const { t } = useTranslation();
   return (
     <section id="about" className="py-32 bg-[#0a0a0a] relative border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6">
@@ -48,42 +46,42 @@ export default function AboutUs() {
             className="text-gray-400 text-base leading-relaxed space-y-4"
           >
             <h2 className="text-2xl font-black text-white tracking-tight uppercase mb-6">
-              {t('about.title')}
+              ABOUT REAL BUILDER
             </h2>
             <p className="text-white font-bold">
-              {t('about.p1')}
+              To become a Real Builder is more than a profession.
             </p>
             <p className="text-[#FFB800] italic font-semibold">
-              {t('about.p2')}
+              It is a mindset. A statement. A way of life.
             </p>
             <p>
-              {t('about.p3')}
+              Real Builder is about taking your career, your income, and your personal standards to the next level.
             </p>
             <p className="text-white font-bold">
-              {t('about.p4')}
+              To earn more, you must become more.
             </p>
             <p>
-              {t('about.p5')}
+              This is your opportunity to unlock your real potential — starting tomorrow — and build a stronger future.
             </p>
             <p className="text-white font-bold">
-              {t('about.p6')}
+              By joining Real Builder, you become part of something that has never existed before:
             </p>
             <p className="text-[#FFB800] font-bold">
-              {t('about.p7')}
+              A new generation of construction professionals.
             </p>
             <p className="italic">
-              {t('about.p8')}
+              Intelligent. Business-minded. Physically strong. Mentally sharp.
             </p>
             <p className="text-white font-bold">
-              {t('about.p9')}
+              You are not just a worker.
             </p>
             <p className="text-[#FFB800] font-black text-xl uppercase">
-              {t('about.p10')}
+              YOU ARE A REAL BUILDER.
             </p>
             <div className="pt-2">
-              <p>{t('about.p11')}</p>
-              <p>{t('about.p12')}</p>
-              <p className="text-white font-bold">{t('about.p13')}</p>
+              <p>Real Builder is a new standard of personality.</p>
+              <p>A new standard of performance.</p>
+              <p className="text-white font-bold">A new standard of success.</p>
             </div>
           </motion.div>
 
@@ -98,28 +96,28 @@ export default function AboutUs() {
               <div className="text-5xl font-black text-white mb-2 group-hover:text-[#FFB800] transition-colors duration-300">
                 <Counter from={0} to={20} suffix="+" />
               </div>
-              <div className="text-gray-500 text-xs font-bold tracking-widest uppercase">{t('about.stat1')}</div>
+              <div className="text-gray-500 text-xs font-bold tracking-widest uppercase">COURSES</div>
             </div>
             
             <div className="bg-[#111315] border border-white/5 rounded-2xl p-8 flex flex-col items-center justify-center text-center group hover:border-[#FFB800]/30 transition-colors duration-300 sm:translate-y-8">
               <div className="text-5xl font-black text-white mb-2 group-hover:text-[#FFB800] transition-colors duration-300">
                 <Counter from={0} to={300} suffix="+" />
               </div>
-              <div className="text-gray-500 text-xs font-bold tracking-widest uppercase">{t('about.stat2')}</div>
+              <div className="text-gray-500 text-xs font-bold tracking-widest uppercase">GRADUATES</div>
             </div>
             
             <div className="bg-[#111315] border border-white/5 rounded-2xl p-8 flex flex-col items-center justify-center text-center group hover:border-[#FFB800]/30 transition-colors duration-300">
               <div className="text-5xl font-black text-white mb-2 group-hover:text-[#FFB800] transition-colors duration-300">
                 <Counter from={0} to={93} suffix="%" />
               </div>
-              <div className="text-gray-500 text-xs font-bold tracking-widest uppercase">{t('about.stat3')}</div>
+              <div className="text-gray-500 text-xs font-bold tracking-widest uppercase">JOB RATE</div>
             </div>
 
             <div className="bg-[#111315] border border-white/5 rounded-2xl p-8 flex flex-col items-center justify-center text-center group hover:border-[#FFB800]/30 transition-colors duration-300 sm:translate-y-8">
               <div className="text-5xl font-black text-white mb-2 group-hover:text-[#FFB800] transition-colors duration-300">
                 <Counter from={0} to={15} suffix="+" />
               </div>
-              <div className="text-gray-500 text-xs font-bold tracking-widest uppercase">{t('about.stat4')}</div>
+              <div className="text-gray-500 text-xs font-bold tracking-widest uppercase">PARTNERS</div>
             </div>
           </motion.div>
         </div>
