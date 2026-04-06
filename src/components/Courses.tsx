@@ -1,0 +1,142 @@
+import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+
+export default function Courses() {
+  const { t } = useTranslation();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const courses = [
+    { name: t('courses.list.course1') },
+    { name: t('courses.list.course2') },
+    { name: t('courses.list.course3') },
+    { name: t('courses.list.course4') },
+    { name: t('courses.list.course5') },
+    { name: t('courses.list.course6') },
+    { name: t('courses.list.course7') },
+    { name: t('courses.list.course8') },
+    { name: t('courses.list.course9') },
+  ];
+
+  // Triplicate courses for seamless infinite scrolling
+  const infiniteCourses = [...courses, ...courses, ...courses];
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    // Initialize scroll position to the middle set to allow scrolling left immediately
+    const initScroll = () => {
+      const children = container.children;
+      if (children.length >= courses.length) {
+        const singleSetWidth = (children[courses.length] as HTMLElement).offsetLeft - (children[0] as HTMLElement).offsetLeft;
+        container.scrollLeft = singleSetWidth;
+      }
+    };
+    
+    // Small delay to ensure rendering is complete
+    setTimeout(initScroll, 100);
+
+    const handleScroll = () => {
+      const children = container.children;
+      if (children.length < courses.length * 2) return;
+      
+      const singleSetWidth = (children[courses.length] as HTMLElement).offsetLeft - (children[0] as HTMLElement).offsetLeft;
+      
+      // Jump forward if we scroll too far left (into the first half of the first set)
+      if (container.scrollLeft < singleSetWidth * 0.5) {
+        container.style.scrollSnapType = 'none';
+        container.scrollLeft += singleSetWidth;
+        container.style.scrollSnapType = 'x mandatory';
+      }
+      // Jump backward if we scroll too far right (into the second half of the third set)
+      else if (container.scrollLeft > singleSetWidth * 2.5) {
+        container.style.scrollSnapType = 'none';
+        container.scrollLeft -= singleSetWidth;
+        container.style.scrollSnapType = 'x mandatory';
+      }
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [courses.length]);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const firstItem = container.children[0] as HTMLElement;
+      if (!firstItem) return;
+      
+      // Calculate exact scroll amount based on item width + gap
+      // We can get the gap by subtracting the first item's offsetLeft from the second item's offsetLeft
+      const secondItem = container.children[1] as HTMLElement;
+      const scrollAmount = secondItem ? secondItem.offsetLeft - firstItem.offsetLeft : firstItem.offsetWidth + 16;
+      
+      container.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const openNotifyMe = () => {
+    window.dispatchEvent(new CustomEvent('openNotifyMe'));
+  };
+
+  return (
+    <section id="courses" className="pt-32 pb-8 bg-[#15181b] relative border-t border-white/5 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 relative">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight uppercase">
+            {t('courses.title')}
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            {t('courses.subtitle')}
+          </p>
+        </div>
+
+        <div className="relative">
+          {/* Navigation Buttons */}
+          <button 
+            onClick={() => scroll('left')}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 bg-[#1a1d21] border border-white/10 text-white p-3 rounded-full hover:bg-[#FFB800] hover:text-black hover:border-[#FFB800] transition-colors shadow-xl"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          
+          <button 
+            onClick={() => scroll('right')}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 bg-[#1a1d21] border border-white/10 text-white p-3 rounded-full hover:bg-[#FFB800] hover:text-black hover:border-[#FFB800] transition-colors shadow-xl"
+          >
+            <ChevronRight size={24} />
+          </button>
+
+          {/* Carousel Container */}
+          <div 
+            ref={scrollContainerRef}
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-8 pt-4 px-4 -mx-4 no-scrollbar"
+          >
+            {infiniteCourses.map((course, index) => (
+              <div 
+                key={index} 
+                onClick={openNotifyMe}
+                className="bg-gradient-to-br from-[#1a1d21] to-[#111315] rounded-xl p-6 border border-white/5 hover:border-[#FFB800]/30 hover:bg-[#1e2125] transition-all cursor-pointer group min-w-[260px] sm:min-w-[300px] snap-start flex-shrink-0 flex flex-col justify-between h-[180px] relative overflow-hidden"
+              >
+                <div className="absolute top-4 right-4 text-white/5 font-black text-6xl group-hover:text-white/10 transition-colors select-none">
+                  {String((index % courses.length) + 1).padStart(2, '0')}
+                </div>
+                <div className="relative z-10">
+                  <div className="text-[#FFB800] text-[10px] font-bold tracking-widest uppercase mb-3">{t('courses.certification')}</div>
+                  <h3 className="text-white font-bold text-xl leading-tight w-4/5 group-hover:text-[#FFB800] transition-colors">{course.name}</h3>
+                </div>
+                <div className="relative z-10 flex items-center gap-2 text-gray-500 text-sm font-semibold group-hover:text-white transition-colors mt-4 uppercase">
+                  {t('courses.interested')} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
